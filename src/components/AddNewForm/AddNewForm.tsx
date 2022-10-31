@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useHistory } from 'react-router-dom';
 import IExpenseData from '../../models/IExpenseData';
 import { postDataToServer } from '../../services/server';
-
-type Props = {
-    closeAction: () => any
-};
 
 type FormData = Omit<IExpenseData, "id">;
 
@@ -17,7 +14,13 @@ type ErrorObject = {
     price: string
 }
 
-const AddNewForm = ( { closeAction } : Props ) => {
+const AddNewForm = () => {
+
+    let history = useHistory();
+
+    const navigateBack = () => {
+        history.push("/");
+    };
 
     const [ formData, setFormData ] = useState<FormData>({
         payeeName: '',
@@ -77,11 +80,11 @@ const AddNewForm = ( { closeAction } : Props ) => {
             price: 0,
             transactionDate: (new Date()).toISOString().slice(0, 10)
         });
-        closeAction();
+        navigateBack();
     };
   
     return ( 
-        <Modal show={true} onHide={closeAction} backdrop="static" keyboard={false}>
+        <Modal show={true} onHide={navigateBack} backdrop="static" keyboard={false}>
             <Modal.Header closeButton>
                 <Modal.Title>Add New Expense</Modal.Title>
             </Modal.Header>
@@ -113,7 +116,7 @@ const AddNewForm = ( { closeAction } : Props ) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger" onClick={closeAction}>
+                <Button variant="danger" onClick={navigateBack}>
                     Close
                 </Button>
                 <Button 

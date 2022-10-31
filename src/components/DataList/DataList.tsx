@@ -6,11 +6,7 @@ import ExpenseTable from "../ExpenseTable/ExpenseTable";
 import CalculationTable from "../CalculationTable/CalculationTable";
 import './DataList.css';
 
-type Props = {
-    addNew: boolean
-};
-
-const DataList = ( { addNew } : Props ) => {
+const DataList = () => {
 
     const [ expenseData, setExpenseData ] = useState<IExpenseData[]>( [] );
     const [ error, setError ] = useState<Error | null>( null );
@@ -28,7 +24,7 @@ const DataList = ( { addNew } : Props ) => {
             }
         }
         getHelper();
-    }, [addNew]);
+    }, []);
 
     return ( 
         <>

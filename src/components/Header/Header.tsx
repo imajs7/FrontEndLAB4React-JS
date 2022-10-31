@@ -1,14 +1,10 @@
-import { Button } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 
-type Props = {
-    openAction: () => any
-};
-
-const Header = ( { openAction } : Props ) => {
+const Header = () => {
     return ( 
-        <div className='d-flex justify-content-between align-center p-3'>
+        <div className='d-flex justify-content-between p-3'>
             <h4>Expense Tracker</h4>
-            <Button variant="primary" onClick={openAction}>Add New</Button>
+            <Link to="/add" className='btn btn-primary'>Add New</Link>
         </div>
      );
 }
