@@ -39,7 +39,12 @@ const AddNewForm = () => {
         const field = event.target.id;
 
         if( field === 'price' ) {
-            const intValue = parseInt(value);
+            let intValue;
+            if( value === '' ){
+                intValue = 0;
+            } else {
+                intValue = parseInt(value);
+            }
             setFormData({
                 ...formData,
                 [field]: intValue
