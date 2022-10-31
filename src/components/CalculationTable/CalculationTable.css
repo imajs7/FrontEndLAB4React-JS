@@ -1,0 +1,25 @@
+.calculation {
+  width: min(100%, 600px);
+  border-collapse: collapse;
+}
+/* Zebra striping */
+.calculation tr:nth-of-type(odd) {
+  background: #eee;
+}
+.calculation th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+  width: 50%;
+}
+.calculation td,
+.calculation th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.calculation td {
+  width: 50%;
+  text-align: right;
+}

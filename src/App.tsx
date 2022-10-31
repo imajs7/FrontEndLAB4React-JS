@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import AddNewForm from './components/AddNewForm/AddNewForm';
+import DataList from './components/DataList/DataList';
+import Header from './components/Header/Header';
 
 function App() {
+
+  const [showForm, setShowForm] = useState<boolean>( false );
+  const handleClose = () => setShowForm(false);
+  const handleOpen = () => setShowForm(true);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Header openAction={handleOpen} />
+        <DataList addNew={showForm}/>
+        {
+          showForm && (
+            <AddNewForm closeAction={handleClose} />
+          )
+        }
+      </Container>
     </div>
   );
 }
