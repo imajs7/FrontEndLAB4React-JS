@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useHistory } from 'react-router-dom';
 import IExpenseData from '../../models/IExpenseData';
 import { postDataToServer } from '../../services/server';
+import './AddNewForm.css';
 
 type FormData = Omit<IExpenseData, "id">;
-
-type ErrorObject = {
-    payeeName: string,
-    product: string,
-    price: string
-}
 
 const AddNewForm = () => {
 
@@ -29,21 +24,15 @@ const AddNewForm = () => {
         transactionDate: (new Date()).toISOString().slice(0, 10)
     });
 
-    const [ errFormData, setErrFormData ] = useState<ErrorObject>({
-        payeeName: 'error',
-        product: 'error',
-        price: 'error'
-    });
-
     const [ formValidity, setFormValidity ] = useState<boolean>(false);
 
-    const validateForm = () => {
-        if( errFormData.payeeName !== '' && errFormData.price !== '' && errFormData.product !== '' ) {
+    useEffect( () => {
+        if( formData.payeeName === '' || formData.price < 1 || formData.product === '' ) {
             setFormValidity(false);
         } else {
             setFormValidity(true);
         }
-    };
+    }, [formData] );
 
     const changeHandler = ( event : any ) => {
         const value = event.target.value;
@@ -61,13 +50,6 @@ const AddNewForm = () => {
                 [field]: value
             });
         }
-
-        setErrFormData({
-            ...errFormData,
-            [field]: ''
-        })
-
-        validateForm();
     };
 
     const submitHandler = async ( event : any ) => {
@@ -94,6 +76,7 @@ const AddNewForm = () => {
                         <Form.Label>Payee</Form.Label>
                         <Form.Select 
                             onChange={changeHandler}
+                            required
                         >
                             <option value="">...</option>
                             <option value="Anurag Jaisingh">Anurag Jaisingh</option>
@@ -103,15 +86,32 @@ const AddNewForm = () => {
 
                     <Form.Group className="mb-3" controlId="product">
                         <Form.Label>Product Purchased</Form.Label>
-                        <Form.Control type="text" value={formData.product} onChange={changeHandler} />
+                        <Form.Control 
+                            type="text" 
+                            value={formData.product} 
+                            onChange={changeHandler} 
+                            required
+                        />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="price">
                         <Form.Label>Expense in Rupees (₹)</Form.Label>
-                        <Form.Control type="text" value={formData.price} onChange={changeHandler} />
+                        <Form.Control 
+                            type="number" 
+                            value={formData.price} 
+                            onChange={changeHandler} 
+                            required
+                        />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="transactionDate">
                         <Form.Label>Transaction Date</Form.Label>
-                        <Form.Control type="date" value={formData.transactionDate} onChange={changeHandler} />
+                        <Form.Control 
+                            type="date" 
+                            value={formData.transactionDate} 
+                            onChange={changeHandler} 
+                            required
+                        />
                     </Form.Group>
                 </Form>
             </Modal.Body>

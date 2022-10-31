@@ -45,7 +45,7 @@ const DataList = () => {
                 )
             }
             {
-                expenseData.length > 0 && (
+                expenseData.length > 0 ? (
                     <>
                         <div className="mb-4 scrollable">
                             <ExpenseTable data={expenseData} />
@@ -54,6 +54,10 @@ const DataList = () => {
                             <CalculationTable data={expenseData} />
                         </div>
                     </>
+                ) : (
+                    <div className="m-5">
+                        <p>Expense list is empty.</p>
+                    </div>
                 )
             }
         </>
